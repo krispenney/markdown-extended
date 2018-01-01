@@ -40,7 +40,7 @@ def process_graph(match):
 
     graph.render("{}/{}".format(path, filename))
 
-    return "![{}]({}/{}.svg)".format(filename, path, filename)
+    return "\n![{}]({}/{}.svg)".format(filename, path, filename)
 
 test = re.sub(r"--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, test, flags=re.MULTILINE)
 

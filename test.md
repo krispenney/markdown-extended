@@ -11,9 +11,11 @@ Also not a graph
 ## Blah blah blah
 
 Check out this amazing graph that does something cool
-![graph6dd4b6cd-57fe-46a5-a280-16f73bfbdf11](data/test/graph6dd4b6cd-57fe-46a5-a280-16f73bfbdf11.svg)
+
+![graph90725b71-9d6b-4ca8-b5c5-c28770fcf48f](data/test/graph90725b71-9d6b-4ca8-b5c5-c28770fcf48f.svg)
 
 Below is a completely different graph
-![graph2336fdab-09d6-408c-9c6d-a887c8217d3a](data/test/graph2336fdab-09d6-408c-9c6d-a887c8217d3a.svg)
+
+![graph2b37d43d-19f0-4e40-9931-28914a236420](data/test/graph2b37d43d-19f0-4e40-9931-28914a236420.svg)
 
 the end
