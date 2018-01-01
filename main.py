@@ -14,7 +14,7 @@ with open(args.file, 'r') as f:
     test = f.read()
 
 source_file_name = args.file.split('.')[0]
-path = 'data/{}'.format(source_file_name)
+path = f'data/{source_file_name}'
 if not os.path.isdir(path):
     os.mkdir(path)
 
@@ -22,7 +22,7 @@ def process_graph(match):
     if not match:
         return ''
     graph = gv.Digraph(format='svg')
-    filename = 'graph' + str(uuid4())
+    filename = f'graph-{uuid4()}'
     nodes = set()
 
     for pair in match.group(1).strip().split('\n'):
@@ -38,13 +38,11 @@ def process_graph(match):
 
         graph.edge(first_id, last_id)
 
-    graph.render("{}/{}".format(path, filename))
+    graph.render(f"{path}/{filename}")
 
-    return "\n![{}]({}/{}.svg)".format(filename, path, filename)
+    return f"\n![{filename}]({path}/{filename}.svg)".format(filename, path, filename)
 
 test = re.sub(r"--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, test, flags=re.MULTILINE)
 
-with open("{}.md".format(source_file_name), 'w') as f:
+with open(f"{source_file_name}.md", 'w') as f:
     f.write(test)
-
-print(test)
