@@ -1,8 +1,0 @@
-digraph {
-	amazing
-	grace
-	amazing -> grace
-	Wow
-	grace -> Wow
-	Wow -> amazing
-}
