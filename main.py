@@ -8,10 +8,10 @@ import graphviz as gv
 parser = argparse.ArgumentParser(description="Extended Markdown")
 parser.add_argument('file', type=str, help='Path of the file to load')
 args = parser.parse_args()
-test = ""
+file_data: str
 
 with open(args.file, 'r') as f:
-    test = f.read()
+    file_data = f.read()
 
 source_file_name = args.file.split('.')[0]
 path = f'data/{source_file_name}'
@@ -27,22 +27,22 @@ def process_graph(match):
 
     for pair in match.group(1).strip().split('\n'):
         pair = pair.split(' ')
-        first_id = pair[0]
-        last_id = pair[-1]
+        source = pair[0]
+        destination = pair[-1]
 
-        if first_id not in nodes:
-            graph.node(first_id)
-        if last_id not in nodes:
-            graph.node(last_id)
-        nodes |= {first_id, last_id}
+        if source not in nodes:
+            graph.node(source)
+        if destination not in nodes:
+            graph.node(destination)
+        nodes |= {source, destination}
 
-        graph.edge(first_id, last_id)
+        graph.edge(source, destination)
 
     graph.render(f"{path}/{filename}")
 
     return f"\n![{filename}]({path}/{filename}.svg)".format(filename, path, filename)
 
-test = re.sub(r"--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, test, flags=re.MULTILINE)
+file_data = re.sub(r"--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, file_data, flags=re.MULTILINE)
 
 with open(f"{source_file_name}.md", 'w') as f:
-    f.write(test)
+    f.write(file_data)
