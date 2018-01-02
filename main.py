@@ -1,5 +1,6 @@
 from time import time
 from uuid import uuid4
+from equations import equation_to_png
 import re
 import os
 import argparse
@@ -40,9 +41,21 @@ def process_graph(match):
 
     graph.render(f"{path}/{filename}")
 
-    return f"\n![{filename}]({path}/{filename}.svg)".format(filename, path, filename)
+    return f"\n![{filename}]({path}/{filename}.svg)"
 
 file_data = re.sub(r"--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, file_data, flags=re.MULTILINE)
+
+def process_latex(match):
+    if not match:
+        return ''
+
+    filename = f"latex-{uuid4()}"
+    with open(f"{path}/{filename}.png", 'wb') as f:
+        equation_to_png(match.group(1).strip(), f)
+
+    return f"![{filename}]({path}/{filename}.png)"
+
+file_data = re.sub(r"\$\$(.+?)\$\$", process_latex, file_data)
 
 with open(f"{source_file_name}.md", 'w') as f:
     f.write(file_data)
