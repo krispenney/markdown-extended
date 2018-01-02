@@ -20,8 +20,6 @@ if not os.path.isdir(path):
     os.mkdir(path)
 
 def process_graph(match):
-    if not match:
-        return ''
     graph = gv.Digraph(format='svg')
     filename = f'graph-{uuid4()}'
     nodes = set()
@@ -46,9 +44,6 @@ def process_graph(match):
 file_data = re.sub(r"--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, file_data, flags=re.MULTILINE)
 
 def process_latex(match):
-    if not match:
-        return ''
-
     filename = f"latex-{uuid4()}"
     with open(f"{path}/{filename}.png", 'wb') as f:
         equation_to_png(' '.join(match.group(1).split('\n')), f)
