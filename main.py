@@ -51,10 +51,12 @@ def process_latex(match):
 
     filename = f"latex-{uuid4()}"
     with open(f"{path}/{filename}.png", 'wb') as f:
-        equation_to_png(match.group(1).strip(), f)
+        equation_to_png(' '.join(match.group(1).split('\n')), f)
+        #equation_to_png(match.group(1).strip(), f)
 
     return f"![{filename}]({path}/{filename}.png)"
 
+file_data = re.sub(r"\$\$+\n((?:.+\n?)+)\n\$\$+", process_latex, file_data)
 file_data = re.sub(r"\$\$(.+?)\$\$", process_latex, file_data)
 
 with open(f"{source_file_name}.md", 'w') as f:
