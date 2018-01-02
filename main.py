@@ -7,17 +7,21 @@ import argparse
 import graphviz as gv
 
 parser = argparse.ArgumentParser(description="Extended Markdown")
-parser.add_argument('file', type=str, help='Path of the file to load')
+parser.add_argument('file', type=str, help='Name of the file to load')
+parser.add_argument('path', type=str, help='Path of the file to load')
 args = parser.parse_args()
+print(args.file)
+print(args.path)
 file_data: str
 
 with open(args.file, 'r') as f:
     file_data = f.read()
 
 source_file_name = args.file.split('.')[0]
-path = f'data/{source_file_name}'
-if not os.path.isdir(path):
-    os.mkdir(path)
+data_path = f'data/{source_file_name}'
+path = args.path
+if not os.path.isdir(f"{path}/{data_path}"):
+    os.mkdir(data_path)
 
 def process_graph(match):
     graph = gv.Digraph(format='svg')
@@ -37,22 +41,21 @@ def process_graph(match):
 
         graph.edge(source, destination)
 
-    graph.render(f"{path}/{filename}")
+    graph.render(f"{path}/{data_path}/{filename}")
 
-    return f"\n![{filename}]({path}/{filename}.svg)"
+    return f"\n![{filename}]({data_path}/{filename}.svg)"
 
 file_data = re.sub(r"--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, file_data, flags=re.MULTILINE)
 
 def process_latex(match):
     filename = f"latex-{uuid4()}"
-    with open(f"{path}/{filename}.png", 'wb') as f:
+    with open(f"{path}/{data_path}/{filename}.png", 'wb') as f:
         equation_to_png(' '.join(match.group(1).split('\n')), f)
-        #equation_to_png(match.group(1).strip(), f)
 
-    return f"![{filename}]({path}/{filename}.png)"
+    return f"![{filename}]({data_path}/{filename}.png)"
 
 file_data = re.sub(r"\$\$+\n((?:.+\n?)+)\n\$\$+", process_latex, file_data)
 file_data = re.sub(r"\$\$(.+?)\$\$", process_latex, file_data)
 
-with open(f"{source_file_name}.md", 'w') as f:
+with open(f"{path}/{source_file_name}.md", 'w') as f:
     f.write(file_data)
