@@ -20,6 +20,10 @@ with open(args.file, 'r') as f:
 source_file_name = args.file.split('.')[0]
 data_path = f'data/{source_file_name}'
 path = args.path
+
+if not os.path.isdir(f"{path}/data"):
+    os.mkdir('data')
+
 if not os.path.isdir(f"{path}/{data_path}"):
     os.mkdir(data_path)
 
