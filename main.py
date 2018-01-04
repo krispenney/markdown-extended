@@ -49,7 +49,7 @@ def process_graph(match):
 
     return f"\n![{filename}]({data_path}/{filename}.svg)"
 
-file_data = re.sub(r"--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, file_data, flags=re.MULTILINE)
+file_data = re.sub(r"^--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, file_data, flags=re.MULTILINE)
 
 def process_latex(match):
     filename = f"latex-{uuid4()}"
@@ -58,7 +58,7 @@ def process_latex(match):
 
     return f"![{filename}]({data_path}/{filename}.png)"
 
-file_data = re.sub(r"\$\$+\n((?:.+\n?)+)\n\$\$+", process_latex, file_data)
+file_data = re.sub(r"^\$\$+\n((?:.+\n?)+)\n\$\$+", process_latex, file_data)
 file_data = re.sub(r"\$\$(.+?)\$\$", process_latex, file_data)
 
 with open(f"{path}/{source_file_name}.md", 'w') as f:
