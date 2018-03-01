@@ -54,11 +54,13 @@ file_data = re.sub(r"^--+\n((?:\w+ -> \w+\n?)+)\n--+", process_graph, file_data,
 def process_latex(match):
     filename = f"latex-{uuid4()}"
     with open(f"{path}/{data_path}/{filename}.png", 'wb') as f:
-        equation_to_png(' '.join(match.group(1).split('\n')), f)
+        equation_to_png(match.group(1), f)
 
     return f"![{filename}]({data_path}/{filename}.png)"
 
-file_data = re.sub(r"^\$\$+\n((?:.+\n?)+)\n\$\$+", process_latex, file_data)
+# file_data = re.sub(r"\$\$\$\n((?:[^\$]+\n)+)\n\$\$\$", process_latex, file_data, flags=re.MULTILINE)
+
+file_data = re.sub(r"\$\$\$((\n|.)*)\$\$\$", process_latex, file_data, flags=re.MULTILINE)
 file_data = re.sub(r"\$\$(.+?)\$\$", process_latex, file_data)
 
 with open(f"{path}/{source_file_name}.md", 'w') as f:
