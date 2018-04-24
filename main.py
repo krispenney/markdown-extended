@@ -60,7 +60,7 @@ def process_latex(match):
 
 # file_data = re.sub(r"\$\$\$\n((?:[^\$]+\n)+)\n\$\$\$", process_latex, file_data, flags=re.MULTILINE)
 
-file_data = re.sub(r"\$\$\$((\n|.)*)\$\$\$", process_latex, file_data, flags=re.MULTILINE)
+file_data = re.sub(r"\$\$\$*((\n|.)*)\$\$\$*", process_latex, file_data, flags=re.MULTILINE)
 file_data = re.sub(r"\$\$(.+?)\$\$", process_latex, file_data)
 
 with open(f"{path}/{source_file_name}.md", 'w') as f:
