@@ -1,5 +1,5 @@
 # Extended Markdown
-Extend the capabilities of Markdown with diagrams and LaTeX.
+Extend the capabilities of Markdown with diagrams and LaTeX to allow for portable viewing, for example on GitHub!
 
 ### Work in Progress :wrench:
 
@@ -11,6 +11,8 @@ The goal of this project is to process **Extended Markdown** files (`.mdx`) into
 ### Examples
 
 #### Graphs
+
+Graphs can be created by specifying an edge list of the form `a -> b`. They are delimited by `-` characters
 
 ##### Source
 
